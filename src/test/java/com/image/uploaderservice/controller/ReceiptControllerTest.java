@@ -35,22 +35,16 @@ public class ReceiptControllerTest {
 		emptyFile = new MockMultipartFile("file", "receipt.jpg", MediaType.IMAGE_JPEG_VALUE, new byte[0]);
 		invalidFormatFile = new MockMultipartFile("file", "receipt.txt", MediaType.TEXT_PLAIN_VALUE,
 				"not an image".getBytes());
-
 	}
 
 	@Test
 	public void testUploadValidImage() throws Exception {
 		// Mock the service behavior for valid image upload
 		mockMvc.perform(multipart("/api/receipts/upload").file(validImage)).andExpect(status().isOk()); // Expecting
-																										// 200// OK for
-																										// a
-																										// valid image
-																										// upload
 	}
 
 	@Test
 	public void testUploadEmptyFile() throws Exception {
-
 		// Mock the service behavior when uploading an empty file
 		mockMvc.perform(multipart("/api/receipts/upload").file(emptyFile)).andExpect(status().isBadRequest()) // Expecting
 																												// 400
@@ -62,12 +56,10 @@ public class ReceiptControllerTest {
 	@Test
 	public void testUploadUnsupportedFormat() throws Exception {
 		// Mock the service behavior for unsupported file format
-		mockMvc.perform(multipart("/api/receipts/upload").file(invalidFormatFile)).andExpect(status().isBadRequest()) // Expecting
+		// Expecting an unsupported format error message
+		mockMvc.perform(multipart("/api/receipts/upload").file(invalidFormatFile)).andExpect(status().isBadRequest())
 				.andExpect(jsonPath("$.message")
-						.value("Unsupported image format. Only jpg, jpeg, png, and gif are allowed.")); // Expecting an
-																										// unsupported
-																										// format error
-																										// message
+						.value("Unsupported image format. Only jpg, jpeg, png, and gif are allowed."));
 	}
 
 }
