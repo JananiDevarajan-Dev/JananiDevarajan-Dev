@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api/receipts")
 public class ReceiptController {
 	private static final List<String> SUPPORTED_FILE_EXTENSIONS = Arrays.asList("jpg", "jpeg", "png", "gif");
